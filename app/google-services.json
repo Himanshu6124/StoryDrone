@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "529216029154",
+    "project_id": "drone-story",
+    "storage_bucket": "drone-story.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529216029154:android:0faa290cf8f6c3cca339bb",
+        "android_client_info": {
+          "package_name": "com.himanshu.storydrone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529216029154-n48ekg1slv29lp5e3k4jtnejppupbh33.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyMKCJj_t7yrimUdtx-0x0Cd3cmZYew5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529216029154-n48ekg1slv29lp5e3k4jtnejppupbh33.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
