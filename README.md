@@ -11,7 +11,7 @@ This project is an Android application written in Kotlin that allows users add a
 Users can chose the privacy options to whom he want to show story. Only the selected person will be able to see story and the story will be disappeared in 10 minutes
 ## Project Setup
 To set up this project on your local machine, follow these steps:
-1.	Clone the repository to your local machine using git clone https://github.com/username/android-kotlin-project.git
+1.	Clone the repository to your local machine using git clone https://github.com/himanshu6124/storyDrone.git
 2.	Open Android Studio and select "Open an Existing Project".
 3.	Navigate to the directory where you cloned the repository and select the "build.gradle" file.
 4.	Wait for the project to build and sync all dependencies.
