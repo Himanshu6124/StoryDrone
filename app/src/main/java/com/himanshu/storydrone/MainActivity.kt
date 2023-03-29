@@ -21,7 +21,6 @@ import kotlin.collections.ArrayList
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private var mSelectedImageFileUri: Uri? = null
-    var list = kotlin.collections.ArrayList<String>()
     var uri: String? = null
 
 
@@ -137,14 +136,11 @@ class MainActivity : BaseActivity() {
     {
         if(myStorysList.size > 0)
         {
+            Log.i("dhdhd",myStorysList[0])
             GlideLoader(this).loadUserPicture(
                 myStorysList[0],
                 binding.tvMyStory
             )
-
         }
-
     }
-
-
 }

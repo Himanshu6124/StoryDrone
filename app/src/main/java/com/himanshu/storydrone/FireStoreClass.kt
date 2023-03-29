@@ -203,7 +203,7 @@ class FireStoreClass {
                 // Hide the progress dialog if there is any error. And print the error in log.
 
 
-//                activity.hideProgressDialog()
+                activity.hideProgressDialog()
 
                 Log.e(
                     activity.javaClass.simpleName,

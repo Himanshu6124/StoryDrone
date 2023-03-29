@@ -37,14 +37,16 @@ class PrivacyAdapter(var context: Context , var list : ArrayList<Pair<String, An
     {
         val item = list[position]
 
+
+
         if(FireStoreClass().getCurrentUserID() == item.first)
         {
             holder.binding.checkBox.visibility = View.GONE
             holder.binding.personName.visibility = View.GONE
         }
 
-        else
-        {
+//        else
+//        {
             holder.binding.personName.text = item.second.toString()
 
             holder.binding.checkBox.setOnClickListener {
@@ -59,14 +61,8 @@ class PrivacyAdapter(var context: Context , var list : ArrayList<Pair<String, An
                     selectedStrings.remove(item.first)
                 }
 
-            }
-
-
+//            }
         }
-
-
-
-
     }
 
 }

@@ -2,7 +2,6 @@ package com.himanshu.storydrone
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.himanshu.storydrone.databinding.ActivityPrivacyBinding
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PrivacyActivity : BaseActivity()
 {
@@ -30,6 +28,9 @@ class PrivacyActivity : BaseActivity()
 
         binding.button2.setOnClickListener {
 
+
+            showProgressDialog("Uploading")
+
             FireStoreClass().uploadImageToCloudStorage(this, Uri.parse(uri),"story")
 //
 //            val intent = Intent(this, MainActivity::class.java)
@@ -45,6 +46,27 @@ class PrivacyActivity : BaseActivity()
     fun userDetailGetSuccess(mp: ArrayList<Pair<String, Any>>)
     {
         list = mp
+        var tlist : ArrayList<Pair<String, Any>>;
+        tlist=mp;
+        val iter: MutableIterator<Pair<String, Any>> = list.iterator()
+
+        while (iter.hasNext()) {
+            val str = iter.next()
+            if (str.first == FireStoreClass().getCurrentUserID()) iter.remove()
+        }
+
+
+//
+//        for(i in tlist)
+//        {
+//            if(i.first == FireStoreClass().getCurrentUserID())
+//            {
+//                tlist.remove(i)
+//            }
+//        }
+
+
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.setHasFixedSize(true)
         val adapter = PrivacyAdapter(this,list,selectedStrings)
@@ -78,9 +100,12 @@ class PrivacyActivity : BaseActivity()
 
     }
     fun uploadStoryToFireStoreSuccess() {
-//        hideProgressDialog()
+        hideProgressDialog()
 
         Log.i("HPHP", "succ")
+
+        val intent =Intent(this,MainActivity::class.java)
+        startActivity(intent)
 
         Toast.makeText(
             this,

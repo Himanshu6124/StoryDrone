@@ -3,6 +3,7 @@ package com.himanshu.storydrone
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.tasks.OnCompleteListener
@@ -16,6 +17,9 @@ class RegisterActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
+
+        binding.cbTermsAndCondition.visibility = View.GONE
+        binding.tvTermsCondition.visibility = View.GONE
 
         binding.tvLogin.setOnClickListener {
             onBackPressed()
@@ -65,13 +69,14 @@ class RegisterActivity : BaseActivity() {
                 )
                 false
             }
-            !binding.cbTermsAndCondition.isChecked -> {
-                showErrorSnackBar(
-                    resources.getString(R.string.err_msg_agree_terms_and_condition),
-                    true
-                )
-                false
-            }
+
+//            !binding.cbTermsAndCondition.isChecked -> {
+//                showErrorSnackBar(
+//                    resources.getString(R.string.err_msg_agree_terms_and_condition),
+//                    true
+//                )
+//                false
+//            }
             else -> {
 //                showErrorSnackBar("Your details are valid.", false)
                 true
