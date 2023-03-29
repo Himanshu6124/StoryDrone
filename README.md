@@ -18,11 +18,17 @@ To set up this project on your local machine, follow these steps:
 5.	Run the app on an emulator or physical device.
 ## Dependencies
 This project uses the following dependencies:
+
 •	Circular Image View - for showing  images in circular manner
+
 •	Glide - for loading and caching images
+
 •	Firebase Auth - for authentication of user
+
 •	Firebase Firestore - for storing data on cloud database
+
 •	RecyclerView - for displaying lists of data
+
 •	Material Components - for designing the UI
 
 
