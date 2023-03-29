@@ -13,7 +13,11 @@ class StoryScreenActivty : AppCompatActivity() {
 
         val uri = intent.getStringExtra("URI")
 
-        GlideLoader(this).loadUserPicture(uri!!, imageView)
+        if(uri != null)
+        {
+
+            GlideLoader(this).loadUserPicture(uri!!, imageView)
+        }
 
 
 

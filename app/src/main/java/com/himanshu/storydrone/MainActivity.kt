@@ -7,11 +7,13 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.himanshu.storydrone.databinding.ActivityMainBinding
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -27,17 +29,29 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+
         uri = intent.getStringExtra("URI").toString()
+
+
 
         Log.i("ghghghg", uri!!)
 
-        if (uri != null) {
-            GlideLoader(this).loadUserPicture(uri!!, binding.tvMyStory)
 
-        }
+
+//        if (uri != null) {
+//            GlideLoader(this).loadUserPicture(uri!!, binding.tvMyStory)
+//
+//        }
 
         FireStoreClass().getStoriesListforCurrentUser(this)
         FireStoreClass().getMyStories(this)
+
+
 
 
         binding.tvAddStory.setOnClickListener {
@@ -87,10 +101,10 @@ class MainActivity : BaseActivity() {
                     try {
                         // The uri of selected image from phone storage.
                         mSelectedImageFileUri = data.data!!
-                        GlideLoader(this).loadUserPicture(
-                            mSelectedImageFileUri!!,
-                            binding.tvMyStory
-                        )
+//                        GlideLoader(this).loadUserPicture(
+//                            mSelectedImageFileUri!!,
+//                            binding.tvMyStory
+//                        )
                         val intent = Intent(this, PrivacyActivity::class.java)
                         intent.putExtra("URI", mSelectedImageFileUri.toString())
                         startActivity(intent)
@@ -134,13 +148,26 @@ class MainActivity : BaseActivity() {
 
     fun fetchMyStorySuccess(myStorysList: ArrayList<String>)
     {
+
+
         if(myStorysList.size > 0)
         {
-            Log.i("dhdhd",myStorysList[0])
-            GlideLoader(this).loadUserPicture(
-                myStorysList[0],
-                binding.tvMyStory
-            )
+            binding.tvMyStory.visibility = View.VISIBLE
+            binding.tvTextMyStory.visibility =View.VISIBLE
+
+            val adapter = MyStoryAdapter(this,myStorysList)
+            binding.tvMyStory.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+            binding.tvMyStory.adapter = adapter
+
+
         }
+
+        binding.tvMyStory.setOnClickListener {
+
+            val intent = Intent(this, StoryScreenActivty::class.java)
+            intent.putExtra("URI", myStorysList[0])
+            startActivity(intent)
+        }
+
     }
 }

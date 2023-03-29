@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.Date
 
 class FireStoreClass {
     // Access a Cloud Firestore instance.
@@ -153,7 +154,7 @@ class FireStoreClass {
                 activity.fetchStorySuccess(storiesList)
 
 
-                        Log.i("sgdgd", storiesList.toString())
+                Log.i("sgdgd", storiesList.toString())
 
             }
             .addOnFailureListener {
@@ -161,7 +162,11 @@ class FireStoreClass {
             }
     }
 
-    fun uploadImageToCloudStorage(activity: PrivacyActivity, imageFileURI: Uri?, imageType: String) {
+    fun uploadImageToCloudStorage(
+        activity: PrivacyActivity,
+        imageFileURI: Uri?,
+        imageType: String
+    ) {
         //getting the storage reference
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
             imageType + System.currentTimeMillis() + "."
@@ -248,38 +253,17 @@ class FireStoreClass {
 
             }
         }
-            .addOnFailureListener {
+            .addOnFailureListener { exception ->
+                Log.e(
+                    activity.javaClass.simpleName,
+                    exception.message,
+                    exception
+                )
             }
 
     }
 
-    fun getUserNameById(uid : String)
-    {
-        var fullName : String = ""
-        mFireStore.collection(Constants.USERS).get().addOnSuccessListener {documents->
-            for(i in documents)
-            {
-                if(uid.equals(i.id))
-                {
-                    val firstName = i["firstName"]
-                    val lastName = i["lastName"]
-                    fullName =  "$firstName  $lastName"
-                    Log.i("fullname",fullName)
 
-
-                }
-
-            }
-
-
-        }.addOnFailureListener {
-
-        }
-        Log.i("fullname",fullName)
-//        return fullName
-
-
-    }
     fun getMyStories(activity: MainActivity) {
         val arr = mutableListOf<DocumentSnapshot>()
         val myStorysList = ArrayList<String>()
@@ -288,16 +272,30 @@ class FireStoreClass {
 
             for (doc in documents) {
                 val uploaderId = doc["uploaderId"]
+                val timestamp = doc["uploadTimeStamp"].toString().toLong()
 
-                if(uploaderId == getCurrentUserID())
-                {
-                    myStorysList.add(doc["uri"] as String)
-                }
+                val curTime = Date().time.toLong()
 
+                val diffOfTime = curTime - timestamp.toLong()
+
+                if (uploaderId.toString() == getCurrentUserID().toString() && diffOfTime< 600000   ) {
+                    myStorysList.add(doc["uri"].toString())
                 }
 
             }
+            Log.i("mystorysize", myStorysList.size.toString())
+
             activity.fetchMyStorySuccess(myStorysList)
+
+        }.addOnFailureListener { exception ->
+            Log.e(
+                activity.javaClass.simpleName,
+                exception.message,
+                exception
+            )
+
+        }
+
 
 
     }
